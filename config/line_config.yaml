@@ -1,0 +1,26 @@
+line_positions:
+  front:
+    up: 0.4
+    down: 0.6
+    left: 0.3
+    right: 0.7
+  side:
+    left: 0.3
+    right: 0.7
+    up: 0.4
+    down: 0.45
+  worm:
+    up: 0.4
+    down: 0.6
+    left: 0.3
+    right: 0.7
+  top:
+    up: 0.4
+    down: 0.6
+    left: 0.3
+    right: 0.7
+
+display:
+  y_start: 0.1
+  margin_x: 0.02
+  y_step: 0.05

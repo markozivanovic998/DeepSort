@@ -1,0 +1,102 @@
+# config/cdetr_config.yaml
+
+# Dataset settings
+dataset: jhu                # Dataset koji se koristi
+save_path: save_file/A_ddp  # Putanja za snimanje model checkpoint-a
+
+# Data loader
+workers: 2                  # Broj radnika za učitavanje podataka
+print_freq: 200             # Print frekvencija tokom treniranja
+
+# Training control
+start_epoch: 0              # Početni epoch
+epochs: 5000                # Ukupan broj epoha za treniranje
+pre: null                   # Pretrained model za učitavanje (ako postoji)
+batch_size: 16              # Batch size za treniranje
+crop_size: 256              # Veličina patch-a (crop size)
+lr_step: 1200               # Epoch posle kojeg se LR smanjuje
+seed: 1                     # Random seed za reproducibilnost
+best_pred: 100000           # Za praćenje najboljeg rezultata
+gpu_id: '0,1'               # Lista GPU-ova za treniranje
+
+# Optimizer settings
+lr: 0.0001                  # Learning rate
+weight_decay: 0.0005        # Weight decay
+
+# Augmentacije
+save: false                 # Da li se snimaju logovi treniranja
+scale_aug: false            # Da li koristiti scale augmentaciju
+scale_type: 0
+scale_p: 0.3
+gray_aug: false             # Da li koristiti grayscale augmentaciju
+gray_p: 0.1
+
+# Test postavke
+test_patch: false
+channel_point: 3
+num_patch: 1
+min_num: -1
+num_knn: 4
+test_per_epoch: 20
+threshold: 0.35             # Prag za filtriranje detekcija
+
+# Video demo
+video_path: ./video_demo/1.mp4  # Putanja do test videa
+
+# Distributed settings
+local_rank: -1
+
+# LR za backbone
+lr_backbone: 0.0001
+lr_drop: 40
+clip_max_norm: 0.1
+
+# Model backbone (ResNet)
+backbone: resnet50
+dilation: false
+position_embedding: sine
+
+# Transformer arhitektura
+enc_layers: 6
+dec_layers: 6
+dim_feedforward: 2048
+hidden_dim: 256
+dropout: 0.1
+nheads: 8
+num_queries: 700
+pre_norm: false
+
+# Segmentacija (ne koristi se ovde)
+masks: false
+no_aux_loss: true
+
+# Matching losses (Hungarian matcher)
+set_cost_class: 2
+set_cost_point: 5
+set_cost_giou: 2
+
+# Loss koeficijenti
+aux_loss: true
+mask_loss_coef: 1
+dice_loss_coef: 1
+cls_loss_coef: 2
+count_loss_coef: 2
+point_loss_coef: 5
+giou_loss_coef: 2
+focal_alpha: 0.25
+
+# Dataset info (ne koristi se trenutno)
+dataset_file: crowd_data
+coco_path: null
+coco_panoptic_path: null
+remove_difficult: false
+
+# Output i device
+output_dir: ''
+device: cuda
+resume: ''
+eval: false
+num_workers: 2
+world_size: 1
+dist_url: env://
+master_port: 29501

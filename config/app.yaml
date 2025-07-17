@@ -1,0 +1,15 @@
+model:
+  path: yolo11x-seg.pt
+  classes: [0, 1, 2, 3, 5, 7]
+  conf_threshold: 0.10
+  iou_threshold: 0.1
+  imgsz: 1920
+
+tracker:
+  max_age: 30
+
+video:
+  input_path: trg.mp4
+  output_path: obradjen_vidp.mp4
+  default_fps: 30
+  codec: mp4v

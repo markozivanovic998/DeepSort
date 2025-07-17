@@ -1,0 +1,29 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# PyTorch sa CUDA 12.1 (mora se instalirati sa --extra-index-url pip opcijom)
+torch
+torchvision
+torchaudio
+
+opencv-python-headless
+# Ostali zahtevi
+numpy
+PyYAML
+ultralytics
+deep-sort-realtime
+cvzone
+pandas
+
+# Dodatni alati
+tqdm
+matplotlib
+seaborn
+scipy
+requests
+seaborn
+
+streamlit
+ruamel.yaml
+
+#Convert to .exe file
+pyinstaller

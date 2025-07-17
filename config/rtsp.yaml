@@ -1,0 +1,6 @@
+rtsp:
+  ip: "10.123.123.23"
+  username: "admin"
+  password: "AtlasA12023"
+  port: "554"
+  path: "/path"
