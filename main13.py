@@ -1,3 +1,4 @@
+# main13.py
 import cv2
 import pandas as pd
 from ultralytics import YOLO
@@ -19,6 +20,7 @@ from moduli.TrackingLogic import is_left_side, is_person_inside_vehicle, process
 from moduli.CliParser import parse_arguments
 from moduli.ModelLoader import initialize_model
 from moduli.ConfigLoader import load_config
+from moduli.VideoSource import get_video_source
 
 args = parse_arguments()
 
@@ -33,7 +35,6 @@ diag_shift2 = args.diag_shift2
 args = parse_arguments()
 app_config, rtsp_url = load_config()
 
-INPUT_VIDEO_PATH = app_config['video']['input_path']
 OUTPUT_VIDEO_PATH = app_config['video']['output_path']
 
 model,device = initialize_model(app_config['model']['path'])
@@ -46,25 +47,13 @@ cv2.namedWindow('RGB', cv2.WINDOW_NORMAL)
 cv2.setWindowProperty('RGB', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 cv2.setMouseCallback('RGB', RGB)
 
-if args.RTSP:
-    rtsp_stream = ThreadedRTSPStream(rtsp_url)
-    rtsp_stream.start()
-    time.sleep(2.0)
-    if not rtsp_stream.stream.isOpened():
-        print(f"Greška: Ne mogu da otvorim RTSP stream na: {rtsp_url}")
-        exit()
-    grabbed, frame = rtsp_stream.read()
-    if not grabbed:
-        print("Greška: Ne mogu da pročitam frame sa RTSP streama")
-        exit()
-else:
-    video_capture = ThreadedVideoCapture(INPUT_VIDEO_PATH)
-    video_capture.start()
-    time.sleep(1.0)
-    grabbed, frame = video_capture.read()
-    if not grabbed:
-        print("Greška: Ne mogu da pročitam frame iz video fajla")
-        exit()
+# OVA LINIJA SADA RADI ISPRAVNO ZBOG IZMENE U VideoSource.py
+video_source, frame = get_video_source(args, app_config['video']['input_path'], rtsp_url)
+
+# Provera da li je inicijalizacija uspela
+if video_source is None or frame is None:
+    print("Nije moguće otvoriti video izvor. Program se gasi.")
+    exit()
 
 # Ovi brojači moraju biti deklarisani pre while petlje
 counter_down, counter_up, counter_left, counter_right = [], [], [], []
@@ -126,16 +115,19 @@ thickness = max(1, frame_width // 1000)
 
 try:
     while True:
-        if args.RTSP:
-            grabbed, frame = rtsp_stream.read()
-            if not grabbed:
-                print("Nije moguće dobiti frame sa RTSP streama")
-                time.sleep(0.1)
+        # 1. Čitanje frejma na početku svake iteracije
+        grabbed, frame = video_source.read()
+
+        # 2. Provera da li je frejm uspešno pročitan
+        if not grabbed:
+            if args.RTSP:
+                # Ako je RTSP stream, sačekaj i pokušaj ponovo
+                print("Nije moguće dobiti frame sa RTSP streama. Pokušavam ponovo...")
+                time.sleep(0.5) 
                 continue
-        else:
-            grabbed, frame = video_capture.read()
-            if not grabbed:
-                print("Kraj video fajla")
+            else:
+                # Ako je video fajl, došli smo do kraja
+                print("Kraj video fajla.")
                 break
 
         count += 1
@@ -173,25 +165,13 @@ try:
         
         if args.plot and visualizer:
             counters = {
-                'up': counter_up,
-                'right': counter_right,
-                'diag1': counter_diag1,
-                'diag3': counter_diag3,
-                'down': counter_down,
-                'left': counter_left,
-                'diag2': counter_diag2,
-                'diag4': counter_diag4
+                'up': counter_up, 'right': counter_right, 'diag1': counter_diag1, 'diag3': counter_diag3,
+                'down': counter_down, 'left': counter_left, 'diag2': counter_diag2, 'diag4': counter_diag4
             }
             entered = len(counters['up']) + len(counters['right']) + len(counters['diag1']) + len(counters['diag3'])
             exited = len(counters['down']) + len(counters['left']) + len(counters['diag2']) + len(counters['diag4'])
 
-            visualizer.update_data(
-                total_people=active_people,
-                entered=entered,
-                exited=exited,
-                frame_size=(frame_width, frame_height),
-                tracks=tracks
-            )
+            visualizer.update_data(total_people=active_people, entered=entered, exited=exited, frame_size=(frame_width, frame_height), tracks=tracks)
             visualizer.update_display()
             
         for track in tracks:
@@ -228,6 +208,8 @@ try:
                     process_diagonal_line(track_id, cx, cy, start_diag3, end_diag3, 'diag3', counter_diag3, person_state, passed_any_line)
                     process_diagonal_line(track_id, cx, cy, start_diag4, end_diag4, 'diag4', counter_diag4, person_state, passed_any_line)
 
+        # Ostatak koda za iscrtavanje je isti
+        # ...
         ukupna_suma = 0
         if USE_CIRCLES:
             for r in circle_radii:
@@ -281,6 +263,7 @@ try:
                            thickness=thickness + 1,
                            colorT=(255, 255, 255), colorR=(0, 128, 0))
 
+
         cv2.imshow('RGB', annotated_frame)
         out.write(annotated_frame)
         key = cv2.waitKey(1)
@@ -288,13 +271,15 @@ try:
             break
 
 except KeyboardInterrupt:
-    print("Zaustavljanje programa...")
+    print("Program prekinut od strane korisnika.")
 finally:
-    if args.RTSP:
-        rtsp_stream.stop()
-        rtsp_stream.release()
-    else:
-        video_capture.stop()
-        video_capture.release()
-    out.release()
+    print("Zatvaranje resursa...")
+    if 'video_source' in locals() and video_source is not None:
+        if hasattr(video_source, 'stop'):
+            video_source.stop()
+        elif hasattr(video_source, 'release'):
+            video_source.release()
+    
+    if 'out' in locals() and out.isOpened():
+        out.release()
     cv2.destroyAllWindows()
