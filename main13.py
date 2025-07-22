@@ -45,13 +45,6 @@ OUTPUT_VIDEO_PATH = app_config['video']['output_path']
 
 model,device = initialize_model(app_config['model']['path'])
 
-def RGB(event, x, y, flags, param):
-    if event == cv2.EVENT_MOUSEMOVE:
-        point = [x, y]
-
-cv2.namedWindow('RGB', cv2.WINDOW_NORMAL)
-cv2.setWindowProperty('RGB', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-cv2.setMouseCallback('RGB', RGB)
 
 video_source, frame = get_video_source(args, app_config['video']['input_path'], rtsp_url)
 if video_source is None or frame is None:
