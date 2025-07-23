@@ -285,7 +285,7 @@ with file_display_area:
                 st.info("Starting analysis with DeepSort...")
                 
                 cmd = [
-                    "python3", "../main.py",
+                    "python3", "../main13.py",
                     f"--perspective={perspective}", f"--left={left}", f"--right={right}",
                     f"--top={top}", f"--bottom={bottom}", f"--circle={circle}"
                 ]
