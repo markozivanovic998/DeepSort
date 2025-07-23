@@ -30,5 +30,7 @@ def parse_arguments():
     circle_group.add_argument('--circle', type=int, default=0, help='Broj koncentričnih krugova za crtanje. Ova opcija isključuje sve ostale linije.')
     circle_group.add_argument('--radius', type=int, default=50, help='Razmak (radijus) između krugova u pikselima.')
 
+    parser.add_argument('--show-stats', action='store_true', help='Prikazuje konačnu statistiku performansi na kraju izvršavanja.')
+    
     # Parsiraj argumente i vrati ih
     return parser.parse_args()

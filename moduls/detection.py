@@ -1,7 +1,7 @@
 # detection.py
 
 import pandas as pd
-from moduli.TrackingLogic import is_person_inside_vehicle
+from moduls.TrackingLogic import is_person_inside_vehicle
 # Pretpostavka je da se funkcija `is_person_inside_vehicle` nalazi u nekom pomoćnom fajlu, npr. `utils.py`
 # from utils import is_person_inside_vehicle
 

@@ -1,0 +1,37 @@
+{
+    "run_summary": {
+        "total_runtime_seconds": 187.45,
+        "start_time": "2025-07-23 15:49:16",
+        "end_time": "2025-07-23 15:52:23"
+    },
+    "performance_metrics": {
+        "total_frames_processed": 21,
+        "overall_average_fps": 0.11,
+        "moving_average_fps_last_100_frames": 0.11,
+        "average_total_processing_time_ms": 8904.46,
+        "average_detection_time_ms": 7819.72,
+        "average_tracking_time_ms": 1073.63
+    },
+    "detection_and_tracking": {
+        "total_detections": 1739,
+        "average_detections_per_frame": 82.81,
+        "average_detection_confidence": 0.408,
+        "peak_concurrent_tracks": 172,
+        "total_tracks_initiated": 1175,
+        "average_active_tracks_per_frame": 130.38
+    },
+    "class_based_metrics": {
+        "total_detections_by_class": {
+            "person": 1792,
+            "car": 44,
+            "bicycle": 17,
+            "motorcycle": 14,
+            "truck": 6,
+            "bus": 1
+        },
+        "final_crossings_by_class": {}
+    },
+    "counting_results": {
+        "circles": 15
+    }
+}

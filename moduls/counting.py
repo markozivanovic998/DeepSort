@@ -1,7 +1,7 @@
 
 # counting.py
 # from utils import process_circle_crossing, process_straight_line, process_diagonal_line
-from moduli.TrackingLogic import process_straight_line, process_diagonal_line, process_circle_crossing
+from moduls.TrackingLogic import process_straight_line, process_diagonal_line, process_circle_crossing
 
 def update_crossings(tracks, params, args, perspective):
     """

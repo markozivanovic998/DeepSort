@@ -1,7 +1,7 @@
 # moduli/VideoSource.py
 import time
-from moduli.ThreadVideoCapture import ThreadedVideoCapture
-from moduli.rtsp_stream import ThreadedRTSPStream
+from moduls.ThreadVideoCapture import ThreadedVideoCapture
+from moduls.rtsp_stream import ThreadedRTSPStream
 
 
 def get_video_source(args, input_path, rtsp_url):
