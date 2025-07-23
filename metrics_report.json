@@ -1,33 +1,32 @@
 {
     "run_summary": {
-        "total_runtime_seconds": 187.45,
-        "start_time": "2025-07-23 15:49:16",
-        "end_time": "2025-07-23 15:52:23"
+        "total_runtime_seconds": 45.34,
+        "start_time": "2025-07-23 16:11:26",
+        "end_time": "2025-07-23 16:12:11"
     },
     "performance_metrics": {
-        "total_frames_processed": 21,
+        "total_frames_processed": 5,
         "overall_average_fps": 0.11,
         "moving_average_fps_last_100_frames": 0.11,
-        "average_total_processing_time_ms": 8904.46,
-        "average_detection_time_ms": 7819.72,
-        "average_tracking_time_ms": 1073.63
+        "average_total_processing_time_ms": 9021.68,
+        "average_detection_time_ms": 7945.35,
+        "average_tracking_time_ms": 1064.28
     },
     "detection_and_tracking": {
-        "total_detections": 1739,
-        "average_detections_per_frame": 82.81,
-        "average_detection_confidence": 0.408,
-        "peak_concurrent_tracks": 172,
-        "total_tracks_initiated": 1175,
-        "average_active_tracks_per_frame": 130.38
+        "total_detections": 475,
+        "average_detections_per_frame": 95.0,
+        "average_detection_confidence": 0.453,
+        "peak_concurrent_tracks": 109,
+        "total_tracks_initiated": 332,
+        "average_active_tracks_per_frame": 99.8
     },
     "class_based_metrics": {
         "total_detections_by_class": {
-            "person": 1792,
-            "car": 44,
-            "bicycle": 17,
-            "motorcycle": 14,
-            "truck": 6,
-            "bus": 1
+            "person": 501,
+            "car": 14,
+            "motorcycle": 12,
+            "bicycle": 7,
+            "truck": 1
         },
         "final_crossings_by_class": {}
     },
