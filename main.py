@@ -11,7 +11,9 @@ import time
 import threading
 import yaml
 from collections import Counter, defaultdict 
+import numpy as np
 
+# Uvoz lokalnih modula
 from moduls.rtsp_stream import ThreadedRTSPStream
 from moduls.frame_processor import process_frame, init_model
 from moduls.visualization import RealTimeVisualizer
@@ -26,7 +28,10 @@ from moduls.detection import filter_detections
 from moduls.counting import update_crossings
 from moduls.drawing import draw_zones_and_stats, draw_track_annotations
 from moduls.Metrics import MetricsTracker
+from moduls.Evaluation import EvaluationMetrics
+from moduls.behavior_analysis import BehaviorAnalytics
 
+# --- INICIJALIZACIJA ---
 args = parse_arguments()
 app_config, rtsp_url = load_config()
 
@@ -63,9 +68,39 @@ params = initialize_parameters(frame_width, frame_height, args)
 params['crossings_by_class'] = defaultdict(lambda: defaultdict(int))
 
 metrics_tracker = MetricsTracker()
+
+eval_metrics_50 = EvaluationMetrics(num_classes=len(model.names), iou_threshold=0.50)
+eval_metrics_75 = EvaluationMetrics(num_classes=len(model.names), iou_threshold=0.75)
+
+behavior_analyzer = None
+if args.show_behavior:
+    print("[INFO] Analiza ponašanja aktivirana.")
+    analysis_zones = {
+        'Leva Zona': np.array([
+            [0, int(frame_height * 0.5)], 
+            [int(frame_width * 0.25), int(frame_height * 0.5)], 
+            [int(frame_width * 0.25), frame_height], 
+            [0, frame_height]
+        ], np.int32),
+        'Centar': np.array([
+            [int(frame_width * 0.4), int(frame_height * 0.4)],
+            [int(frame_width * 0.6), int(frame_height * 0.4)],
+            [int(frame_width * 0.6), int(frame_height * 0.6)],
+            [int(frame_width * 0.4), int(frame_height * 0.6)]
+        ], np.int32)
+    }
+
+    behavior_analyzer = BehaviorAnalytics(
+        frame_shape=frame.shape, 
+        zones=analysis_zones,
+        loitering_threshold=15.0, # Prag u sekundama za "zadržavanje"
+        speed_threshold=150.0,    # Prag brzine u pikselima/sekundi
+        direction_change_threshold=100.0 # Prag za promenu smera u stepenima
+    )
+
+
 count = 0
 previous_track_ids = set() 
-
 stats_interval = 60 
 last_stats_time = time.time()
 
@@ -89,6 +124,10 @@ try:
         results = model.predict(frame, classes=app_config['model']['classes'], conf=app_config['model']['conf_threshold'], iou=app_config['model']['iou_threshold'], imgsz=app_config['model']['imgsz'], verbose=False, device=device)
         detection_time = time.time() - detection_start_time
         
+        if metrics_tracker.total_frames_processed == 1:
+            gflops = app_config['model'].get('gflops', 0.0)
+            metrics_tracker.set_gflops(gflops)
+
         boxes = results[0].boxes
         avg_confidence = boxes.conf.mean().item() if len(boxes.conf) > 0 else 0.0
         class_indices = boxes.cls.cpu().numpy().astype(int)
@@ -109,22 +148,30 @@ try:
         newly_initiated_tracks_count = len(current_track_ids - previous_track_ids)
         previous_track_ids = current_track_ids
 
+        # === USLOVNO AŽURIRANJE STANJA ANALITIKE PONAŠANJA ===
+        if args.show_behavior and behavior_analyzer:
+            behavior_analyzer.update(tracks)
+        # ========================================================
+        
         update_crossings(tracks, params, args, perspective)
         
         if not args.show_boxes:
             draw_track_annotations(annotated_frame, tracks)
+            
         draw_zones_and_stats(annotated_frame, params, args, perspective)
+
+        # === USLOVNO ISCRTAVANJE REZULTATA ANALITIKE PONAŠANJA ===
+        if args.show_behavior and behavior_analyzer:
+            # Prvo iscrtaj heatmapu kao pozadinu
+            annotated_frame = behavior_analyzer.draw_heatmap(annotated_frame, alpha=0.4)
+            # Zatim iscrtaj informacije o analizi (zone, anomalije, itd.)
+            annotated_frame = behavior_analyzer.draw_analytics(annotated_frame)
+        # ===============================================================
 
         active_people = sum(1 for track in tracks if track.is_confirmed())
         ui = params['ui']
         cvzone.putTextRect(annotated_frame, f"Total: {active_people}", (ui['margin_x'], ui['y_start'] - ui['y_step']),
                             scale=ui['scale'], thickness=ui['thickness'], colorT=(0, 0, 0), colorR=(255, 255, 255))
-        
-        if args.plot and visualizer:
-            entered = len(params['counters'].get('up', [])) + len(params['counters'].get('right', []))
-            exited = len(params['counters'].get('down', [])) + len(params['counters'].get('left', []))
-            visualizer.update_data(total_people=active_people, entered=entered, exited=exited, frame_size=(frame_width, frame_height), tracks=tracks)
-            visualizer.update_display()
         
         detections_count = len(detections_for_tracker)
         active_tracks_count = len(tracks)
@@ -154,14 +201,24 @@ try:
 finally:
     if args.show_stats:
         print("\n[INFO] Obrada završena. Generisanje FINALNOG izveštaja o metrikama...")
+        
+        eval_summary = {
+            "Precision_Recall_F1_at_IoU_0.50": eval_metrics_50.calculate_metrics(),
+            "Precision_Recall_F1_at_IoU_0.75": eval_metrics_75.calculate_metrics()
+        }
+        
         metrics_tracker.update_final_counts(params)
+        metrics_tracker.set_evaluation_summary(eval_summary)
+        
         metrics_tracker.print_summary()
         metrics_tracker.save_summary_to_json("metrics_report.json")
     else:
         print("\n[INFO] Program završen. Za prikaz statistike, pokrenite sa --show-stats opcijom.")
 
-    video_source.release()
-    cv2.destroyAllWindows()
+    if video_source:
+        video_source.release()
     if out:
         out.release()
+    cv2.destroyAllWindows()
     print("[INFO] Svi resursi su oslobođeni.")
+

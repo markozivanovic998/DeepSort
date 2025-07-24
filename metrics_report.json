@@ -1,36 +1,1334 @@
 {
     "run_summary": {
-        "total_runtime_seconds": 45.34,
-        "start_time": "2025-07-23 16:11:26",
-        "end_time": "2025-07-23 16:12:11"
+        "total_runtime_seconds": 58.18,
+        "start_time": "2025-07-24 14:33:03",
+        "end_time": "2025-07-24 14:34:01"
     },
     "performance_metrics": {
-        "total_frames_processed": 5,
-        "overall_average_fps": 0.11,
-        "moving_average_fps_last_100_frames": 0.11,
-        "average_total_processing_time_ms": 9021.68,
-        "average_detection_time_ms": 7945.35,
-        "average_tracking_time_ms": 1064.28
+        "total_frames_processed": 6,
+        "overall_average_fps": 0.1,
+        "moving_average_fps_last_100_frames": 0.1,
+        "model_gflops": 0.0,
+        "average_total_processing_time_ms": 9655.01,
+        "average_detection_time_ms": 8265.85,
+        "average_tracking_time_ms": 1371.69
     },
-    "detection_and_tracking": {
-        "total_detections": 475,
-        "average_detections_per_frame": 95.0,
-        "average_detection_confidence": 0.453,
-        "peak_concurrent_tracks": 109,
-        "total_tracks_initiated": 332,
-        "average_active_tracks_per_frame": 99.8
+    "detection_and_tracking_stats": {
+        "total_detections": 552,
+        "average_detections_per_frame": 92.0,
+        "average_detection_confidence": 0.439,
+        "peak_concurrent_tracks": 121,
+        "total_tracks_initiated": 374,
+        "average_active_tracks_per_frame": 98.67
     },
-    "class_based_metrics": {
+    "class_based_stats": {
         "total_detections_by_class": {
-            "person": 501,
-            "car": 14,
-            "motorcycle": 12,
-            "bicycle": 7,
-            "truck": 1
+            "person": 575,
+            "car": 19,
+            "motorcycle": 14,
+            "bicycle": 9,
+            "truck": 1,
+            "bus": 1
         },
         "final_crossings_by_class": {}
     },
     "counting_results": {
         "circles": 15
+    },
+    "evaluation_metrics (zahteva Ground Truth)": {
+        "Precision_Recall_F1_at_IoU_0.50": {
+            "class_0": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_1": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_2": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_3": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_4": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_5": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_6": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_7": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_8": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_9": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_10": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_11": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_12": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_13": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_14": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_15": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_16": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_17": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_18": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_19": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_20": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_21": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_22": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_23": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_24": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_25": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_26": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_27": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_28": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_29": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_30": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_31": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_32": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_33": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_34": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_35": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_36": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_37": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_38": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_39": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_40": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_41": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_42": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_43": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_44": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_45": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_46": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_47": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_48": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_49": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_50": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_51": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_52": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_53": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_54": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_55": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_56": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_57": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_58": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_59": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_60": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_61": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_62": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_63": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_64": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_65": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_66": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_67": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_68": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_69": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_70": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_71": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_72": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_73": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_74": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_75": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_76": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_77": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_78": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_79": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "overall_summary": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0
+            }
+        },
+        "Precision_Recall_F1_at_IoU_0.75": {
+            "class_0": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_1": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_2": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_3": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_4": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_5": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_6": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_7": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_8": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_9": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_10": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_11": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_12": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_13": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_14": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_15": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_16": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_17": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_18": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_19": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_20": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_21": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_22": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_23": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_24": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_25": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_26": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_27": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_28": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_29": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_30": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_31": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_32": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_33": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_34": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_35": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_36": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_37": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_38": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_39": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_40": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_41": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_42": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_43": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_44": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_45": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_46": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_47": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_48": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_49": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_50": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_51": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_52": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_53": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_54": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_55": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_56": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_57": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_58": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_59": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_60": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_61": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_62": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_63": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_64": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_65": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_66": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_67": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_68": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_69": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_70": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_71": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_72": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_73": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_74": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_75": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_76": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_77": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_78": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "class_79": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "TP": 0,
+                "FP": 0,
+                "FN": 0
+            },
+            "overall_summary": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0
+            }
+        }
     }
 }

@@ -31,6 +31,7 @@ def parse_arguments():
     circle_group.add_argument('--radius', type=int, default=50, help='Razmak (radijus) između krugova u pikselima.')
 
     parser.add_argument('--show-stats', action='store_true', help='Prikazuje konačnu statistiku performansi na kraju izvršavanja.')
+    parser.add_argument('--show_behavior', action='store_true', help='Enable and display behavior analytics.')
     
     # Parsiraj argumente i vrati ih
     return parser.parse_args()
