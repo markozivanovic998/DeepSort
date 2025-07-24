@@ -30,6 +30,7 @@ from moduls.drawing import draw_zones_and_stats, draw_track_annotations
 from moduls.Metrics import MetricsTracker
 from moduls.Evaluation import EvaluationMetrics
 from moduls.behavior_analysis import BehaviorAnalytics
+from moduls.perspective import apply_perspective_transform
 
 # --- INICIJALIZACIJA ---
 args = parse_arguments()
@@ -127,7 +128,7 @@ try:
             else:
                 print("Kraj video fajla.")
                 break
-        
+        frame = apply_perspective_transform(frame, perspective, frame_width, frame_height)
         count += 1
         
         detection_start_time = time.time()
