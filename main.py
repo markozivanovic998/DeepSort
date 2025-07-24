@@ -194,7 +194,16 @@ try:
             avg_confidence=avg_confidence,
             detections_by_class=detections_by_class
         )
-
+          # Ažurirajte vizualizator u realnom vremenu
+        if visualizer:
+            visualizer.update_data(
+                    total_people=active_people,
+                    entered=params['crossings_by_class']['person']['entered'], 
+                    exited=params['crossings_by_class']['person']['exited'],   
+                    frame_size=(frame_width, frame_height),
+                    tracks=tracks
+                )
+            visualizer.update_display()
         current_time = time.time()
         if args.show_stats and (current_time - last_stats_time) >= stats_interval:
             print(f"\n--- PERIODIČNI IZVEŠTAJ STATISTIKE ({time.strftime('%H:%M:%S')}) ---")
@@ -229,6 +238,8 @@ finally:
         video_source.release()
     if out:
         out.release()
+    if visualizer:
+            visualizer.close() 
     cv2.destroyAllWindows()
     print("[INFO] Svi resursi su oslobođeni.")
 
