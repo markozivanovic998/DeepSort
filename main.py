@@ -91,13 +91,23 @@ if args.show_behavior:
     }
 
     behavior_analyzer = BehaviorAnalytics(
-        frame_shape=frame.shape, 
-        zones=analysis_zones,
-        loitering_threshold=15.0, # Prag u sekundama za "zadržavanje"
-        speed_threshold=150.0,    # Prag brzine u pikselima/sekundi
-        direction_change_threshold=100.0 # Prag za promenu smera u stepenima
-    )
-
+    frame_shape=frame.shape, 
+    zones=analysis_zones,
+    loitering_threshold=10.0,
+    speed_threshold=150.0,
+    direction_change_threshold=90.0,
+    idle_speed_threshold=15.0,         # Brzina ispod koje se smatra da objekat stoji
+    idle_time_threshold=5.0,           # Vreme u sekundama nakon kojeg se stajanje smatra 'Idle'
+    zone_hopping_time=10.0,            # Vremenski interval za detekciju 'zone hopping'
+    zone_hopping_count=3,              # Broj promena zona za aktivaciju anomalije
+    cyclic_path_points=25,             # Broj tačaka za proveru cikličnog kretanja
+    cyclic_path_distance_threshold=30, # Prag udaljenosti za detekciju povratka
+    group_distance_threshold=70,       # Maksimalna udaljenost za formiranje grupe
+    linear_path_angle_threshold=20.0,   # Maksimalna promena ugla za linearno kretanje
+    heatmap_use_case=None,
+    heatmap_reset_interval=30,     # Resetuj na 30 sekundi
+    heatmap_decay_factor=0.95      # Neka tragovi brzo blede
+)
 
 count = 0
 previous_track_ids = set() 
