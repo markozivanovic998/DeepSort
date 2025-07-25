@@ -140,7 +140,7 @@ Sistem je izgrađen na temeljima proverenih i moćnih tehnologija iz sveta Pytho
 
 ### 🧠 Napredna Analiza Ponašanja
 * **🔥 Heatmape (Mape Toplote):** Generisanje dinamičkih ili kumulativnih heatmapi koje vizualizuju "vruće" zone – područja najviše aktivnosti i zadržavanja. Idealno za analizu kretanja kupaca ili identifikaciju uskih grla.
-* ** เส้นทาง Putanje i Tragovi:** Vizualizacija putanja svakog praćenog objekta, omogućavajući detaljnu analizu tokova kretanja.
+* **Putanje i Tragovi:** Vizualizacija putanja svakog praćenog objekta, omogućavajući detaljnu analizu tokova kretanja.
 * **⚠️ Detekcija Anomalija:** Modularni sistem za prepoznavanje sumnjivih ili specifičnih obrazaca ponašanja:
     * **Zadržavanje (Loitering):** Alarmiranje kada se objekat zadrži u definisanoj zoni duže od dozvoljenog vremena.
     * **Prekoračenje Brzine:** Detekcija objekata koji se kreću brže od definisanog praga.
