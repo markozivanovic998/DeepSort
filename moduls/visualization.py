@@ -9,6 +9,8 @@ from datetime import datetime, timedelta
 import heapq
 import logging
 import time
+import json # Dodato za rad sa JSON fajlom
+import os   # Dodato za rad sa fajl sistemom
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +19,10 @@ class RealTimeVisualizer:
         self.max_data_points = max_data_points
         self.window_name = window_name
         self.last_update_time = time.time()
+        
+        # --- NOVO: Inicijalizacija log fajla ---
+        self.log_file = "visuelizationLog.json"
+        self._setup_log_file()
         
         # Create figure with multiple subplots
         plt.style.use('seaborn-v0_8-darkgrid')
@@ -50,7 +56,16 @@ class RealTimeVisualizer:
         # Create OpenCV window
         cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)
         cv2.resizeWindow(self.window_name, 1800, 1400)
-        
+
+    # --- NOVO: Metoda za postavljanje log fajla ---
+    def _setup_log_file(self):
+        """Initializes/clears the log file by writing an empty list."""
+        try:
+            with open(self.log_file, 'w') as f:
+                json.dump([], f)
+        except IOError as e:
+            logger.error(f"Could not initialize log file {self.log_file}: {e}")
+            
     def reset_data(self):
         """Initialize all data structures"""
         self.timestamps = deque(maxlen=self.max_data_points)
@@ -80,6 +95,10 @@ class RealTimeVisualizer:
         
         # For performance tracking
         self.frame_times = deque(maxlen=100)
+
+        # --- NOVO: Resetovanje kumulativnih brojača ---
+        self.total_entered_session = 0
+        self.total_exited_session = 0
         
     def update_data(self, total_people, entered=0, exited=0, frame_size=(1920, 1080), tracks=None):
         """Update all metrics with new data"""
@@ -92,6 +111,10 @@ class RealTimeVisualizer:
         self.entered_count.append(entered)
         self.exited_count.append(exited)
         
+        # --- NOVO: Ažuriranje kumulativnih brojača ---
+        self.total_entered_session += entered
+        self.total_exited_session += exited
+
         # Density (% of scene filled)
         density = (total_people / 50) * 100  # Assume max 50 people in scene
         self.density.append(min(density, 100))
@@ -115,7 +138,36 @@ class RealTimeVisualizer:
         
         # Track frame processing time
         self.frame_times.append(time.time() - start_time)
-    
+
+        # --- NOVO: Logovanje statistike u JSON fajl ---
+        self._log_statistics(current_time, total_people, entered, exited)
+
+    # --- NOVO: Metoda za upisivanje statistike u fajl ---
+    def _log_statistics(self, timestamp, total_people, entered, exited):
+        """Gathers current stats and appends them to the JSON log file."""
+        log_entry = {
+            "timestamp": timestamp.isoformat(),
+            "current_people": total_people,
+            "entered_this_update": entered,
+            "exited_this_update": exited,
+            "total_entered_session": self.total_entered_session,
+            "total_exited_session": self.total_exited_session,
+            "density_percent": self.density[-1] if self.density else None,
+            "average_dwell_time_seconds": float(np.mean(self.stay_durations)) if self.stay_durations else 0.0,
+            "active_alarms_count": len(self.alarms),
+            "alarms_list": [msg for _, msg in self.alarms]
+        }
+        
+        try:
+            # Read existing data, append new entry, and write back
+            with open(self.log_file, 'r+') as f:
+                data = json.load(f)
+                data.append(log_entry)
+                f.seek(0) # Vraća kursor na početak fajla
+                json.dump(data, f, indent=4)
+        except (IOError, json.JSONDecodeError) as e:
+            logger.error(f"Error writing to log file {self.log_file}: {e}")
+
     def _update_stay_duration(self, tracks, current_time):
         """Update people dwell time data"""
         if tracks is None:
@@ -467,8 +519,6 @@ if __name__ == "__main__":
     # Simulate data updates
     try:
         total_people = 0
-        entered_total = 0
-        exited_total = 0
         
         class DummyTrack:
             def __init__(self, track_id, bbox):
@@ -491,9 +541,6 @@ if __name__ == "__main__":
             new_exited = max(0, -change)
             
             total_people = max(0, total_people + new_entered - new_exited)
-            
-            entered_total += new_entered
-            exited_total += new_exited
 
             simulated_tracks = []
             for i in range(total_people):
@@ -528,26 +575,3 @@ if __name__ == "__main__":
     finally:
         logger.info("Cleaning up resources...")
         visualizer.close()
-
-
-if __name__ == "__main__":
-    visualizer = RealTimeVisualizer()
-
-    for _ in range(30):
-        visualizer.update_data(total_people=np.random.randint(10, 40),
-                               entered=np.random.randint(0, 5),
-                               exited=np.random.randint(0, 5),
-                               frame_size=(640, 480),
-                               tracks=[
-                                   DummyTrack(i, (
-                                       np.random.randint(0, 600),
-                                       np.random.randint(0, 400),
-                                       np.random.randint(600, 640),
-                                       np.random.randint(400, 480)
-                                   )) for i in range(np.random.randint(5, 10))
-                               ])
-        visualizer.update_display()
-        time.sleep(0.05)
-
-    cv2.waitKey(0)
-    visualizer.close()

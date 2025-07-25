@@ -5,6 +5,8 @@ import math
 from collections import defaultdict
 from itertools import combinations
 import cvzone
+import json # 📝 LOGOVANJE: Uvoz potrebnih biblioteka
+import os
 
 class BehaviorAnalytics:
     """
@@ -12,6 +14,8 @@ class BehaviorAnalytics:
     
     Nova, pojednostavljena inicijalizacija omogućava odabir svrhe korišćenja (use case)
     za automatsko podešavanje parametara heatmape.
+    
+    📝 LOGOVANJE: Dodata je mogućnost logovanja događaja i generisanja statističkog izveštaja.
     """
 
     # 🔥 PREDEFINISANE POSTAVKE ZA HEATMAPU NA OSNOVU SVRHE KORIŠĆENJA
@@ -45,17 +49,20 @@ class BehaviorAnalytics:
                  group_distance_threshold=60,
                  linear_path_angle_threshold=15.0,
                  # 🔥 NOVI, JEDNOSTAVNIJI NAČIN PODEŠAVANJA HEATMAPE
-                 heatmap_use_case=None, # Izaberi namenu: 'detekcija_guzvi', 'dugorocna_analiza', itd.
-                 # Opciono: Ručno podešavanje ako se heatmap_use_case ne koristi
+                 heatmap_use_case=None,
                  heatmap_reset_interval=0,
-                 heatmap_decay_factor=0.99
+                 heatmap_decay_factor=0.99,
+                 # 📝 LOGOVANJE: Novi parametri za fajlove
+                 log_file="behavior_log.json",
+                 report_file="behavior_report.json"
                 ):
         """
         Inicijalizacija modula.
         
         Args:
             heatmap_use_case (str, optional): Naziv predefinisane postavke za heatmapu.
-                                              Ako je postavljen, ignoriše ručne vrednosti.
+            log_file (str, optional): Putanja do fajla za logovanje događaja. Ako je None, logovanje je isključeno.
+            report_file (str, optional): Putanja do fajla za finalni statistički izveštaj.
         """
         self.frame_height, self.frame_width = frame_shape[:2]
         self.zones = zones if zones else {}
@@ -72,22 +79,19 @@ class BehaviorAnalytics:
         self.group_distance_threshold = group_distance_threshold
         self.linear_path_angle_threshold = linear_path_angle_threshold
 
-        # 🔥 AUTOMATSKA KONFIGURACIJA HEATMAPE
         if heatmap_use_case and heatmap_use_case in self.HEATMAP_PRESETS:
             interval, decay = self.HEATMAP_PRESETS[heatmap_use_case]
             self.heatmap_reset_interval = interval
             self.heatmap_decay_factor = decay
             print(f"Heatmap konfigurisan za namenu: '{heatmap_use_case}' (Reset: {interval}s, Bleđenje: {decay})")
         else:
-            # Koristi ručne vrednosti ako 'use case' nije izabran ili je nevalidan
             self.heatmap_reset_interval = heatmap_reset_interval
             self.heatmap_decay_factor = heatmap_decay_factor
 
         self.heatmap_decay_factor = np.clip(self.heatmap_decay_factor, 0.9, 1.0)
         self.heatmap = np.zeros((self.frame_height, self.frame_width), dtype=np.float32)
         self.last_heatmap_reset_time = time.time()
-
-        # Ostatak inicijalizacije...
+        
         self.track_data = defaultdict(lambda: {
             'positions': [], 'in_zone': None, 'entry_time': None,
             'total_dwell_time': defaultdict(float), 'speed': 0.0,
@@ -95,7 +99,70 @@ class BehaviorAnalytics:
             'movement_state': 'Mirovanje', 'idle_start_time': None
         })
         self.track_groups = {}
+        
+        # 📝 LOGOVANJE: Inicijalizacija sistema za logovanje i statistiku
+        self.log_file = log_file
+        self.report_file = report_file
+        self.seen_track_ids = set()
+        self.last_group_state = []
+        
+        # Brisanje starog log fajla pri pokretanju
+        if self.log_file and os.path.exists(self.log_file):
+            os.remove(self.log_file)
+            
+        self.report_data = {
+            'opste_statistike': {
+                'ukupno_pracenih_objekata': 0,
+                'trenutno_aktivnih_objekata': 0
+            },
+            'detektovane_anomalije': defaultdict(int),
+            'detektovani_obrasci': defaultdict(int),
+            'statistike_zona': defaultdict(lambda: {'broj_ulazaka': 0, 'ukupno_vreme_zadrzavanja_s': 0.0}),
+            'statistike_grupa': {
+                'trenutni_broj_grupa': 0
+            }
+        }
 
+    # 📝 LOGOVANJE: Nova metoda za upisivanje događaja u log fajl
+    def _log_event(self, event_type, data):
+        """Upisuje jedan događaj u JSON log fajl."""
+        if not self.log_file:
+            return
+        
+        log_entry = {
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'event': event_type,
+            'data': data
+        }
+        
+        try:
+            with open(self.log_file, 'a', encoding='utf-8') as f:
+                json.dump(log_entry, f, ensure_ascii=False)
+                f.write('\n')
+        except IOError as e:
+            print(f"Greška prilikom pisanja u log fajl: {e}")
+
+    # 📝 LOGOVANJE: Nova metoda za čuvanje finalnog izveštaja
+    def save_report(self):
+        """Čuva akumulirane statističke podatke u JSON fajl izveštaja."""
+        if not self.report_file:
+            print("Putanja za fajl izveštaja nije podešena. Izveštaj neće biti sačuvan.")
+            return
+
+        # Ažuriranje finalnih vrednosti pre čuvanja
+        # Dodavanje vremena zadržavanja za objekte koji su još uvek u zoni na kraju
+        current_time = time.time()
+        for track_id, data in self.track_data.items():
+            if data['in_zone'] and data['entry_time']:
+                duration = current_time - data['entry_time']
+                self.report_data['statistike_zona'][data['in_zone']]['ukupno_vreme_zadrzavanja_s'] += duration
+
+        try:
+            with open(self.report_file, 'w', encoding='utf-8') as f:
+                json.dump(self.report_data, f, ensure_ascii=False, indent=4)
+            print(f"📊 Statistički izveštaj je sačuvan u fajl: {self.report_file}")
+        except IOError as e:
+            print(f"Greška prilikom čuvanja izveštaja: {e}")
 
     def _calculate_centroid(self, bbox):
         x1, y1, x2, y2 = bbox
@@ -104,26 +171,36 @@ class BehaviorAnalytics:
     def update(self, tracks):
         current_time = time.time()
         
+        # 📝 LOGOVANJE: Ažuriranje broja aktivnih objekata za izveštaj
+        confirmed_tracks = [t for t in tracks if t.is_confirmed()]
+        self.report_data['opste_statistike']['trenutno_aktivnih_objekata'] = len(confirmed_tracks)
+
         if self.heatmap_reset_interval > 0 and (current_time - self.last_heatmap_reset_time) > self.heatmap_reset_interval:
             self.heatmap.fill(0)
             self.last_heatmap_reset_time = current_time
             print(f"[{time.strftime('%H:%M:%S')}] Heatmap resetovan.")
+            # 📝 LOGOVANJE: Beleženje reseta heatmape
+            self._log_event('heatmap_resetovan', {'vreme_reseta': time.strftime('%Y-%m-%d %H:%M:%S')})
         
         self.heatmap *= self.heatmap_decay_factor
 
-        active_track_ids = {track.track_id for track in tracks if track.is_confirmed()}
+        active_track_ids = {track.track_id for track in confirmed_tracks}
         for track_id in list(self.track_data.keys()):
             if track_id not in active_track_ids:
                 del self.track_data[track_id]
 
-        for track in tracks:
-            if not track.is_confirmed(): continue
-
+        for track in confirmed_tracks:
             track_id = track.track_id
             bbox = track.to_tlbr()
             centroid = self._calculate_centroid(bbox)
             data = self.track_data[track_id]
             
+            # 📝 LOGOVANJE: Detekcija i logovanje novog objekta
+            if track_id not in self.seen_track_ids:
+                self.seen_track_ids.add(track_id)
+                self.report_data['opste_statistike']['ukupno_pracenih_objekata'] += 1
+                self._log_event('novi_objekat_detektovan', {'track_id': track_id, 'pozicija': centroid})
+
             data['anomalies'].clear()
             data['behaviors'].clear()
             
@@ -165,10 +242,24 @@ class BehaviorAnalytics:
             self._detect_zone_hopping(track_id, current_time)
             self._detect_path_patterns(track_id)
             
+            # 📝 LOGOVANJE: Ažuriranje statistike i logovanje stanja objekta
+            if data['anomalies']:
+                for anomaly in data['anomalies']: self.report_data['detektovane_anomalije'][anomaly] += 1
+            if data['behaviors']:
+                for behavior in data['behaviors']: self.report_data['detektovani_obrasci'][behavior] += 1
+            
+            self._log_event('stanje_objekta', {
+                'track_id': track_id,
+                'pozicija': centroid,
+                'brzina_px_s': round(data['speed'], 2),
+                'stanje_kretanja': data['movement_state'],
+                'anomalije': list(data['anomalies']),
+                'obrasci': list(data['behaviors']),
+                'zona': data['in_zone']
+            })
+
         self._update_group_detection(active_track_ids)
 
-    # ... Ostatak klasa ostaje nepromenjen ...
-    # (Sve metode od _calculate_angle do draw_analytics su iste kao pre)
     def _calculate_angle(self, p1, p2, p3):
         v1 = (p2[0] - p1[0], p2[1] - p1[1])
         v2 = (p3[0] - p2[0], p3[1] - p2[1])
@@ -185,14 +276,28 @@ class BehaviorAnalytics:
         
     def _update_zone_data(self, track_id, current_zone, current_time):
         data = self.track_data[track_id]
-        if current_zone != data['in_zone']:
+        previous_zone = data['in_zone']
+
+        if current_zone != previous_zone:
+            # Događaj izlaska iz prethodne zone
+            if previous_zone is not None and data['entry_time'] is not None:
+                duration = current_time - data['entry_time']
+                data['total_dwell_time'][previous_zone] += duration
+                # 📝 LOGOVANJE
+                self.report_data['statistike_zona'][previous_zone]['ukupno_vreme_zadrzavanja_s'] += duration
+                self._log_event('izlaz_iz_zone', {'track_id': track_id, 'zona': previous_zone, 'trajanje_s': round(duration, 2)})
+
+            # Događaj ulaska u novu zonu
             if current_zone is not None:
                 data['zone_history'].append((current_zone, current_time))
                 if len(data['zone_history']) > 10: data['zone_history'].pop(0)
-            if data['in_zone'] is not None:
-                data['total_dwell_time'][data['in_zone']] += current_time - data['entry_time']
+                # 📝 LOGOVANJE
+                self.report_data['statistike_zona'][current_zone]['broj_ulazaka'] += 1
+                self._log_event('ulaz_u_zonu', {'track_id': track_id, 'zona': current_zone})
+            
             data['entry_time'] = current_time if current_zone is not None else None
             data['in_zone'] = current_zone
+
         if data['in_zone'] is not None:
             dwell_duration = current_time - data['entry_time']
             if dwell_duration > self.loitering_threshold: data['anomalies'].add('Zadrzavanje')
@@ -220,26 +325,41 @@ class BehaviorAnalytics:
 
     def _update_group_detection(self, active_track_ids):
         self.track_groups.clear()
-        if len(active_track_ids) < 2: return
+        if len(active_track_ids) < 2: 
+            if self.last_group_state: # Ako su postojale grupe, a sada ne, loguj promenu
+                self.last_group_state = []
+                self.report_data['statistike_grupa']['trenutni_broj_grupa'] = 0
+                self._log_event('azuriranje_grupa', {'grupe': []})
+            return
+
         positions = {tid: self.track_data[tid]['positions'][-1][:2] for tid in active_track_ids if self.track_data[tid]['positions']}
         pairs = []
         for id1, id2 in combinations(positions.keys(), 2):
             dist = math.sqrt((positions[id1][0] - positions[id2][0])**2 + (positions[id1][1] - positions[id2][1])**2)
             if dist < self.group_distance_threshold: pairs.append({id1, id2})
-        if not pairs: return
+
         groups = []
-        while len(pairs) > 0:
-            current_group = pairs.pop(0)
-            i = 0
-            while i < len(pairs):
-                if not current_group.isdisjoint(pairs[i]):
-                    current_group.update(pairs.pop(i))
-                    i = 0
-                else: i += 1
-            groups.append(list(current_group))
+        if pairs:
+            while len(pairs) > 0:
+                current_group = pairs.pop(0)
+                i = 0
+                while i < len(pairs):
+                    if not current_group.isdisjoint(pairs[i]):
+                        current_group.update(pairs.pop(i))
+                        i = 0
+                    else: i += 1
+                groups.append(list(current_group))
+        
         for i, group in enumerate(groups):
             group_id = f"G{i+1}"
             for track_id in group: self.track_groups[track_id] = group_id
+        
+        # 📝 LOGOVANJE: Beleženje promene u stanju grupa
+        sorted_groups = sorted([sorted(g) for g in groups])
+        if sorted_groups != self.last_group_state:
+            self.report_data['statistike_grupa']['trenutni_broj_grupa'] = len(sorted_groups)
+            self._log_event('azuriranje_grupa', {'broj_grupa': len(sorted_groups), 'grupe': sorted_groups})
+            self.last_group_state = sorted_groups
 
     def draw_heatmap(self, frame, alpha=0.5, colormap=cv2.COLORMAP_JET):
         if np.max(self.heatmap) > 0:

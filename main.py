@@ -107,7 +107,9 @@ if args.show_behavior:
     linear_path_angle_threshold=20.0,   # Maksimalna promena ugla za linearno kretanje
     heatmap_use_case=None,
     heatmap_reset_interval=30,     # Resetuj na 30 sekundi
-    heatmap_decay_factor=0.95      # Neka tragovi brzo blede
+    heatmap_decay_factor=0.95,      # Neka tragovi brzo blede
+    log_file="logBehaviorAnalytics.json",          # Opciono: promenite ime log fajla
+    report_file="BehaviorAnalytics_Report.json" 
 )
 
 count = 0
