@@ -3,12 +3,12 @@
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c?logo=pytorch&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-5c3ee8?logo=opencv&logoColor=white)
-![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-blueviolet?logo=ultralytics)
+![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-blueviolet?logo=ultralytics)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 **Pretvorite pasivni video nadzor u proaktivni, inteligentni sistem za prikupljanje i analizu podataka u realnom vremenu.**
 
-Ovo je sveobuhvatna platforma za video analitiku koja koristi najmodernije algoritme mašinskog učenja kako bi transformisala sirove video snimke u dragocene poslovne i bezbednosne uvide. Kroz fuziju **YOLOv8**, state-of-the-art modela za detekciju objekata, i **DeepSORT** algoritma za robusno praćenje, ovaj sistem nudi neuporedivu preciznost, brzinu i dubinu analize kretanja i interakcija u bilo kom okruženju.
+Ovo je sveobuhvatna platforma za video analitiku koja koristi najmodernije algoritme mašinskog učenja kako bi transformisala sirove video snimke u dragocene poslovne i bezbednosne uvide. Kroz fuziju **YOLOv11**, state-of-the-art modela za detekciju objekata, i **DeepSORT** algoritma za robusno praćenje, ovaj sistem nudi neuporedivu preciznost, brzinu i dubinu analize kretanja i interakcija u bilo kom okruženju.
 
 <br>
 
@@ -17,29 +17,15 @@ Ovo je sveobuhvatna platforma za video analitiku koja koristi najmodernije algor
 
 ---
 
-## 📋 Sadržaj
-
-* [Tehnološki Skup](#-tehnološki-skup)
-* [Ključne Mogućnosti](#-ključne-mogućnosti)
-* [Instalacija i Podešavanje](#-instalacija-i-podešavanje)
-* [Konfiguracija Sistema](#️-konfiguracija-sistema)
-* [Pokretanje Sistema](#-pokretanje-sistema)
-* [Potencijalne Primene](#-potencijalne-primene)
-* [Plan Razvoja (Roadmap)](#-plan-razvoja-roadmap)
-* [Doprinos](#-doprinos)
-* [Licenca](#-licenca)
-
----
-
 ## 🛠️ Tehnološki Skup
 
 Sistem je izgrađen na temeljima proverenih i moćnih tehnologija iz sveta Python-a i veštačke inteligencije:
 
 * **Python 3.9+:** Glavni programski jezik, izabran zbog svoje fleksibilnosti, ogromnog ekosistema i podrške za AI/ML biblioteke.
-* **Ultralytics YOLOv8:** Najnovija generacija YOLO (You Only Look Once) modela, pruža izuzetno brzu i tačnu detekciju objekata u realnom vremenu.
+* **Ultralytics YOLOv11:** Najnovija generacija YOLO (You Only Look Once) modela, pruža izuzetno brzu i tačnu detekciju objekata u realnom vremenu.
 * **DeepSORT:** Algoritam za praćenje koji rešava problem okluzije (preklapanja objekata) i ponovne identifikacije, dodeljujući jedinstveni ID svakom praćenom objektu.
 * **OpenCV:** Defakto standard za računarsku viziju; koristi se za čitanje video stream-ova, manipulaciju slikama i iscrtavanje rezultata.
-* **PyTorch:** Osnovni deep learning framework na kojem je izgrađen YOLOv8, omogućava hardversku akceleraciju (GPU) za maksimalne performanse.
+* **PyTorch:** Osnovni deep learning framework na kojem je izgrađen YOLOv11, omogućava hardversku akceleraciju (GPU) za maksimalne performanse.
 * **NumPy:** Fundamentalna biblioteka za numeričke operacije, neophodna za efikasnu manipulaciju podacima o pozicijama i putanjama.
 
 ---
@@ -48,7 +34,7 @@ Sistem je izgrađen na temeljima proverenih i moćnih tehnologija iz sveta Pytho
 
 ### 🎯 Detekcija i Praćenje
 * **📈 Visoko-precizno Praćenje:** Robusno praćenje više objekata istovremeno, održavajući jedinstvene ID-jeve čak i u uslovima gustog saobraćaja, preklapanja i kratkotrajnih izlazaka iz kadra.
-* **📦 Višeklasna Detekcija:** Sistem nije ograničen na ljude. Zahvaljujući snazi YOLOv8 modela pre-treniranog na COCO setu podataka, sposoban je da detektuje i prati objekte iz **80 unapred definisanih klasa**, uključujući:
+* **📦 Višeklasna Detekcija:** Sistem nije ograničen na ljude. Zahvaljujući snazi YOLOv11 modela pre-treniranog na COCO setu podataka, sposoban je da detektuje i prati objekte iz **80 unapred definisanih klasa**, uključujući:
 ## 👥 Ljudi i Povezani Predmeti
 * `person`
 * `backpack`
